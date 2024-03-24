@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Groepsindelingstool</title>
+    <script src="https://unpkg.com/vue"></script>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100">
+
+<div id="app" class="container mx-auto py-8">
+    <h1 class="text-3xl font-bold mb-4">Groepsindelingstool</h1>
+
+    <div class="flex justify-between">
+        <div class="w-1/2 p-4 bg-white rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-2">Groep 1</h2>
+            <ul>
+                <li v-for="(member, index) in group1" :key="index" class="flex items-center justify-between py-2 border-b">
+                    <span>{{ member }}</span>
+                    <button @click="moveToGroup2(index)" class="px-2 py-1 bg-blue-500 text-white rounded">></button>
+                </li>
+            </ul>
+            <div class="mt-4">
+                <select v-model="selectedMemberGroup1" class="px-4 py-2 mr-2 border rounded">
+                    <option value="" disabled>Select a member to remove</option>
+                    <option v-for="(member, index) in group1" :key="index" :value="index">{{ member }}</option>
+                </select>
+                <button @click="removeFromGroup1" class="px-4 py-2 bg-red-500 text-white rounded">Remove</button>
+            </div>
+        </div>
+
+        <div class="w-1/2 p-4 bg-white rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-2">Groep 2</h2>
+            <ul>
+                <li v-for="(member, index) in group2" :key="index" class="flex items-center justify-between py-2 border-b">
+                    <span>{{ member }}</span>
+                    <button @click="moveToGroup1(index)" class="px-2 py-1 bg-blue-500 text-white rounded"><</button>
+                </li>
+            </ul>
+            <div class="mt-4">
+                <select v-model="selectedMemberGroup2" class="px-4 py-2 mr-2 border rounded">
+                    <option value="" disabled>Select a member to remove</option>
+                    <option v-for="(member, index) in group2" :key="index" :value="index">{{ member }}</option>
+                </select>
+                <button @click="removeFromGroup2" class="px-4 py-2 bg-red-500 text-white rounded">Remove</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <input type="text" v-model="newMember" placeholder="Voeg lid toe" class="px-4 py-2 mr-2 border rounded">
+        <button @click="addGroupMember" class="px-4 py-2 bg-blue-500 text-white rounded">Voeg toe aan Groep 1</button>
+    </div>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                group1: [],
+                group2: [],
+                newMember: '',
+                selectedMemberGroup1: '',
+                selectedMemberGroup2: ''
+            };
+        },
+        methods: {
+            addGroupMember() {
+                if (this.newMember.trim() !== '') {
+                    this.group1.push(this.newMember);
+                    this.newMember = '';
+                }
+            },
+            moveToGroup2(index) {
+                const member = this.group1.splice(index, 1)[0];
+                this.group2.push(member);
+            },
+            moveToGroup1(index) {
+                const member = this.group2.splice(index, 1)[0];
+                this.group1.push(member);
+            },
+            removeFromGroup1() {
+                if (this.selectedMemberGroup1 !== '') {
+                    this.group1.splice(this.selectedMemberGroup1, 1);
+                    this.selectedMemberGroup1 = '';
+                }
+            },
+            removeFromGroup2() {
+                if (this.selectedMemberGroup2 !== '') {
+                    this.group2.splice(this.selectedMemberGroup2, 1);
+                    this.selectedMemberGroup2 = '';
+                }
+            }
+        }
+    });
+
+    app.mount("#app");
+</script>
+
+</body>
+
+</html>

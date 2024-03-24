@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>#app{ display: grid ; grid-template-columns: 1fr 1fr 1fr}</style>
+</head>
+<body>
+<div id="app" >
+    <p>Voornaam</p>
+    <input v-model="Vnaam"/> <!-- tweezijdige binding -->
+    <br>
+
+    <p>Tussen</p>
+    <input v-model="Tussen"/> <!-- tweezijdige binding -->
+    <br>
+
+    <p>Achternaam</p>
+    <input v-model="Anaam"/> <!-- tweezijdige binding -->
+    <br>
+
+    <h1 v-show="toon">{{Vnaam}} {{Tussen}} {{Anaam}}</h1> <!-- enkelzijdige binding -->
+    <button v-on:click="schakel">schakel</button> <!-- binding event handler -->
+</div>
+</body>
+<script src="https://unpkg.com/vue"></script> <!-- js na de body -->
+
+<script>
+    const app = Vue.createApp({ // vue-instantie
+        data() { // properties
+            return {
+                Vnaam: "",
+                Tussen: "",
+                Anaam: "",
+                toon: true
+            }
+        },
+        methods: { // methods
+            schakel(){
+                console.log("Schakel " + !this.toon), // zie console in de browser
+                    this.toon = !this.toon
+            }
+        }
+    })
+    app.mount("#app") // binding aan html-element
+</script>
+</html>

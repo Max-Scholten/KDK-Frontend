@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boodschappenlijst</title>
+    <style>
+        /* Optionele CSS-styling */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Boodschappenlijst</h2>
+    <input type="text" id="itemInput" placeholder="Voeg een nieuw item toe">
+    <button id="addItemBtn">Toevoegen</button>
+    <ul id="itemList">
+        <!-- Items worden hier weergegeven -->
+    </ul>
+</div>
+
+<script>
+    class ShoppingList {
+        constructor() {
+            this.addItemBtn = document.getElementById("addItemBtn");
+            this.itemInput = document.getElementById("itemInput");
+            this.itemList = document.getElementById("itemList");
+            this.addItemBtn.addEventListener("click", this.addItem.bind(this));
+        }
+
+        addItem() {
+            const itemText = this.itemInput.value.trim();
+            if (itemText !== "") {
+                const listItem = document.createElement("li");
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.addEventListener("click", this.toggleItem.bind(this, listItem));
+                listItem.appendChild(checkbox);
+                listItem.appendChild(document.createTextNode(itemText));
+                this.itemList.appendChild(listItem);
+                this.itemInput.value = "";
+            } else {
+                alert("Voer een geldig item in.");
+            }
+        }
+
+        toggleItem(listItem, event) {
+            const checkbox = event.target;
+            if (checkbox.checked) {
+                listItem.classList.add("completed");
+            } else {
+                listItem.classList.remove("completed");
+            }
+        }
+    }
+
+    const shoppingList = new ShoppingList();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mijl-Kilometer Converter</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+</head>
+<body>
+
+<div id="app">
+    <h2>Mijl-Kilometer Converter</h2>
+    <input type="number" v-model.number="miles" @input="convert('miles')" placeholder="Mijlen">
+    <span> Mijlen = </span>
+    <input type="number" v-model.number="kilometers" @input="convert('kilometers')" placeholder="Kilometers">
+    <span> Kilometers</span>
+</div>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            miles: 0,
+            kilometers: 0
+        },
+        methods: {
+            convert(unitChanged) {
+                const milesToKilometers = 1.60934;
+                const kilometersToMiles = 0.621371;
+
+                if (unitChanged === 'miles') {
+                    this.kilometers = (this.miles * milesToKilometers).toFixed(2);
+                } else if (unitChanged === 'kilometers') {
+                    this.miles = (this.kilometers * kilometersToMiles).toFixed(2);
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

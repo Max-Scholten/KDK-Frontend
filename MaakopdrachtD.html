@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <style>
+        /* Style the list to display numbers */
+        ul {
+            padding: 0; /* Remove default padding */
+        }
+
+        li {
+            counter-increment: my-counter; /* Increment the counter for each list item */
+        }
+
+        li::before {
+            content: counter(my-counter) ". "; /* Display the counter value with a period */
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model="newItem">
+    <button @click="addItem">OK</button>
+
+    <ul>
+        <li v-for="item in items" :key="item">{{ item }}</li>
+    </ul>
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            newItem: '',
+            items: ['Item 1', 'Item 2', 'Item 3']
+        },
+        methods: {
+            addItem: function() {
+                // Remove the last item from the list
+                this.items.pop();
+
+                // Add the new item to the beginning of the list
+                this.items.unshift(this.newItem);
+
+                // Clear the input field for the next item
+                this.newItem = '';
+            }
+        }
+    });
+
+
+</script>
+
+</body>
+</html>

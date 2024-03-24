@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smiley Diavoorstelling</title>
+    <script src="https://unpkg.com/vue"></script> <!-- js na de body -->
+</head>
+<body>
+
+<div id="app">
+    <button  @click="nextSmiley">Smile</button>
+    <img v-bind:src="smileys[currentIndex]" alt="test"/>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                currentIndex: 0,
+                smileys: [
+                    'Image/test1.jpeg',
+                    'Image/test2.jpeg',
+                    'Image/test3.jpeg',
+                    'Image/test4.png'
+                ]
+            };
+        },
+        methods: {
+            nextSmiley() {
+                this.currentIndex = (this.currentIndex + 1) % this.smileys.length;
+                console.log("Huidige smiley:", this.smileys[this.currentIndex]);
+            }
+        }
+    });
+
+    app.mount('#app');
+</script>
+
+</body>
+</html>
